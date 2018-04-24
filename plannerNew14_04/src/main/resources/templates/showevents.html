@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}"/>-->
+    <!--<script th:src="@{/webjars/bootsrtap/3.3.7-1/js/bootstrap.min.js}"></script>-->
+    <!--<script th:src="@{/webjars/jquery/3.2.1/jquery/min/js}"></script>-->
+    <!--<script src="webjars/jquery/3.2.1/jquery.min.js"></script>-->
+    <meta charset="UTF-8">
+    <title>Show all your event</title>
+    <link href="css/custom.css"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <h2>All saved events</h2>
+        <tr>
+            <th>To do:</th>
+            <th>Date start:</th>
+            <th>Date end:</th>
+            <th>Time start:</th>
+            <th>Time end:</th>
+            <th>Time title:</th>
+            <th>Time all day:</th>
+            <th>Actions</th>
+        </tr>
+        zmiana events na event
+        <tr th:each="events : ${events}">
+
+            <td th:text="${events.description}"></td>
+            <td th:text="${events.dateStart}"></td>
+            <td th:text="${events.dateEnd}"></td>
+            <td th:text="${events.timeStart}"></td>
+            <td th:text="${events.timeEnd}"></td>
+            <td th:text="${events.title}"></td>
+            <td th:text="${events.place}"></td>
+            <td><a th:id="${events.id}" id="idxe">Delete</a></td>
+
+
+
+        </tr>
+
+        <script>
+
+                $( document ).ready(function() {
+                  $('a').on('click' , function (e) {
+
+                var id = $(this).attr("id");
+                console.log(id);
+                ajaxDelete(id);
+                element = $(this).closest('tr');
+                element.hide();
+                });
+
+
+                alert(zmienna1 - zmienna2);
+                if(zmienna1 - zmienna2 > 900000 && zmienna1 - zmienna2 < 7200000 ){
+                alert("sprawdz salke");
+                }
+                });
+                function ajaxDelete(id) {
+                    $.ajax({
+                        url: "api/event/delete/" + id,
+                        type: "DELETE",
+                        // data: {id:id} ,
+                        success: function (response) {
+                            // alert(response.message);
+                            // load();
+                        },
+                    });
+                }
+
+        </script>
+
+
+    </table>
+</div>
+</body>
+</html>
