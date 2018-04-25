@@ -25,7 +25,7 @@
                     <h4 class="modal-title">Modal Header</h4>
                 </div>
                 <div class="modal-body">
-                    <form  class="form-horizontal" th:object="${event}" th:action="@{/calendar}" th:method="post">
+                    <form class="form-horizontal" th:object="${event}" th:action="@{/calendar}" th:method="post">
                         <div class="form-group">
                             <label class="control-label">Description:</label>
                             <input type="text" class="form-control" th:field="*{description}">
@@ -52,10 +52,12 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Rooms to chose : </label>
-                            <input id="radios1" class="form-check-input" type="radio" name="sex" value="101" th:field="*{place}">
+                            <input id="radios1" class="form-check-input" type="radio" name="sex" value="101"
+                                   th:field="*{place}">
                             Room 101
                             </input>
-                            <input id="radios2" class="form-check-input" type="radio" name="sex" value="102" th:field="*{place}">
+                            <input id="radios2" class="form-check-input" type="radio" name="sex" value="102"
+                                   th:field="*{place}">
                             Room 102
                             </input>
                             <input class="form-check-input" type="radio" name="sex" value="113" th:field="*{place}">
@@ -64,7 +66,7 @@
                         </div>
                         <div class="row">
                             <input id="submit" type="submit" class="btn btn-success btn-block"><span
-                                    class="glyphicon glyphicon-off"></span> Save
+                                class="glyphicon glyphicon-off"></span> Save
                             </input>
                         </div>
 
@@ -73,35 +75,23 @@
             </div>
         </div>
     </div>
-    <!--<div class="modal fade" id="modalAlert" role="dialog">-->
-        <!--<div class="modal-dialog">-->
+    <div class="modal fade" id="modalAlert" role="dialog">
+        <div class="modal-dialog">
 
-            <!--&lt;!&ndash; Modal content&ndash;&gt;-->
-            <!--<div class="modal-content">-->
-                <!--<div class="modal-header">-->
-                    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-                    <!--<h4 class="modal-title">Error</h4>-->
-                <!--</div>-->
-                <!--<div class="modal-body">-->
-                    <!--<div >-->
-                        <!--<h2>Plese check room. In that time it gonna be busy</h2>-->
-                        <!--<div class="form-group">-->
-                            <!--<label class="control-label">Rooms to chose : </label>-->
-                            <!--<input id="radios1Change" class="form-check-input" type="radio" name="sex" value="101" th:field="*{place}">-->
-                            <!--Room 101-->
-                            <!--</input>-->
-                            <!--<input id="radios2Change" class="form-check-input" type="radio" name="sex" value="102" th:field="*{place}">-->
-                            <!--Room 102-->
-                            <!--</input>-->
-                            <!--<input id="radios3Change" class="form-check-input" type="radio" name="sex" value="113" th:field="*{place}">-->
-                            <!--Room 113-->
-                            <!--</input>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h2>Plese check room. In that time it gonna be busy</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modalToDelete" role="dialog">
         <div class="modal-dialog">
@@ -113,10 +103,17 @@
                     <h4 class="modal-title">Modal Header</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="#" th:action="@{/calendar(id=${id})}" method="post">
-                        <input type="hidden" name="_method" value="delete">
-                        <br><a th:href="@{/delete(id=${id})}">Delete this topic</a></br>
-                    </form>
+                    <tr th:each="events : ${events}">
+                        <td th:text="${events.description}"></td>
+                        <td th:text="${events.dateStart}"></td>
+                        <td th:text="${events.dateEnd}"></td>
+                        <td th:text="${events.timeStart}"></td>
+                        <td th:text="${events.timeEnd}"></td>
+                        <td th:text="${events.title}"></td>
+                        <td th:text="${events.place}"></td>
+                        <td><a th:id="${events.id}" id="idxe">Delete</a></td>
+                        <td><a th:id="${events.id}" id="idx">Edit</a></td>
+                    </tr>
                 </div>
             </div>
         </div>
@@ -277,6 +274,7 @@
 </body>
 </html>
 </table>
+
 
 
 
@@ -673,8 +671,46 @@
         return d;
     }
 
-    $('form').on ('submit',function ( toPrevent ) {
+    function check(input) {
+        var trueorfalse = false;
+        $.ajax({
+            type: "GET",
+            url: "api/event/all",
+            cache: false,
+            async: false,
+        }).done(function (response) {
+            $.each(response, function (i, event) {
+                var place = event.place;
+                if (input == place) {
+                    trueorfalse = true;
+                }
+            });
+        });
+        return trueorfalse;
+    }
+
+    function checkTime(dataStart, timeStart) {
+        var trueorfalse = false;
+        $.ajax({
+            type: "GET",
+            url: "api/event/all",
+            cache: false,
+            async: false,
+        }).done(function (response) {
+            $.each(response, function (i, event) {
+                var dateStartDB = event.dateStart;
+                var timeStartDB = event.timeStart;
+                if (convertToMs(dataStart, timeStart).getTime() + 7200000 > convertToMs(dateStartDB, timeStartDB).getTime()) {
+                    trueorfalse = true;
+                }
+            });
+        });
+        return trueorfalse;
+    }
+
+    $('form').on('submit', function (toPrevent) {
         alert("we submit My frieand :) ");
+        var trueorfalse = false;
         var dataStart = $('#dateStart').val();
         var timeStart = $('#timeStart').val();
         var dataEnd = $('#dateEnd').val();
@@ -685,30 +721,48 @@
             $.ajax({
                 type: "GET",
                 url: "api/event/all",
-
+                cache: false,
+                async: false,
             }).done(function (response) {
-            var toCheck = false ;
-                console.log(response);
-
                 $.each(response, function (i, event) {
                     var dateStartDB = event.dateStart;
                     var timeStartDB = event.timeStart;
-                    var place       = event.place ;
-                    if (event.dateStart == dataStart) {
+                    var place = event.place;
+                    console.log ( "data start + time start in ms " +convertToMs(dataStart, timeStart).getTime()) ;
+                    console.log ( convertToMs(dataStart, timeStart).getTime() + 7200000 ) ;
+                    console.log ( "data startDB + time startDB in ms " +convertToMs(dateStartDB, timeStartDB).getTime()) ;
 
-                        if ($('input:radio:checked').val() == place && convertToMs(dataStart, timeStart).getTime() + 7200000 > convertToMs(dateStartDB, timeStartDB).getTime()) {
+                    if (event.dateStart == dataStart) { // mysle ze w tym ifie dodac converty na ms'y. Poprawnie wykonać warunek !!
+                        // w nastepnym sprawdzac czy pokoje sa te same i zwrtotka true
 
-                            toCheck = true;
-                            return false;
+                        if (/*$('input:radio:checked').val() == place &&*/ convertToMs(dataStart, timeStart).getTime() + 7200000 > convertToMs(dateStartDB, timeStartDB).getTime()) {
+
+                            trueorfalse = true;
                         }
                     }
                 });
-            console.log(toCheck);
             });
-
-            toPrevent.preventDefault();
+            if (trueorfalse) {
+                toPrevent.preventDefault();
+            }
+            // $('#modalAlert').modal('show');
         }
+
     });
+    // $('#modalToDelete').modal('show' , function () {
+    //
+    // $(function (id) {
+    //     $.ajax({
+    //         url: "api/event/delete/" + id,
+    //         type: "DELETE",
+    //         // data: {id:id} ,
+    //         success: function (response) {
+    //             // alert(response.message);
+    //             // load();
+    //         },
+    //     });
+    // });
+    // });
     $("form").trigger("reset");
 </script>
 <link href="css/custom.css"
