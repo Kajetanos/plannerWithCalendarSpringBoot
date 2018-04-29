@@ -727,19 +727,23 @@
                 $.each(response, function (i, event) {
                     var dateStartDB = event.dateStart;
                     var timeStartDB = event.timeStart;
+                    var timeEndDB = event.timeEnd;
+                    var dateEndDB = event.dateEnd;
                     var place = event.place;
-                    console.log ( "data start + time start in ms " +convertToMs(dataStart, timeStart).getTime()) ;
+                    console.log ( "data start + time start in ms " );
+                    console.log ( convertToMs(dataStart, timeStart).getTime()) ;
                     console.log ( convertToMs(dataStart, timeStart).getTime() + 7200000 ) ;
-                    console.log ( "data startDB + time startDB in ms " +convertToMs(dateStartDB, timeStartDB).getTime()) ;
+                    console.log ( "data startDB + time startDB in ms " );
+                    console.log(convertToMs(dateStartDB, timeStartDB).getTime()) ;
 
-                    if (event.dateStart == dataStart) { // mysle ze w tym ifie dodac converty na ms'y. Poprawnie wykonać warunek !!
-                        // w nastepnym sprawdzac czy pokoje sa te same i zwrtotka true
+                    if ( convertToMs(dataStart, timeStart).getTime()  >= convertToMs(dateStartDB, timeStartDB).getTime() && convertToMs(dataEnd, timeEnd).getTime() < convertToMs(dateEndDB, timeEndDB).getTime() ) {
 
-                        if (/*$('input:radio:checked').val() == place &&*/ convertToMs(dataStart, timeStart).getTime() + 7200000 > convertToMs(dateStartDB, timeStartDB).getTime()) {
+                        if ($('input:radio:checked').val() == place  ) {
 
                             trueorfalse = true;
                         }
                     }
+
                 });
             });
             if (trueorfalse) {
