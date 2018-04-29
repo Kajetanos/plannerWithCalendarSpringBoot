@@ -82,11 +82,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Error</h4>
+                    <p class="modal-title">Error</p>
                 </div>
                 <div class="modal-body">
                     <div>
-                        <h2>Plese check room. In that time it gonna be busy</h2>
+                        <p>Plese check room. In that time it gonna be busy</h2>
                     </div>
                 </div>
             </div>
@@ -709,7 +709,6 @@
     }
 
     $('form').on('submit', function (toPrevent) {
-        alert("we submit My frieand :) ");
         var trueorfalse = false;
         var dataStart = $('#dateStart').val();
         var timeStart = $('#timeStart').val();
@@ -748,8 +747,12 @@
             });
             if (trueorfalse) {
                 toPrevent.preventDefault();
+            $('#myModal').modal('hide');
+            $('#modalAlert').modal('show');
+            $('.close').on('click', function () {
+                $('#myModal').modal('show');
+                });
             }
-            // $('#modalAlert').modal('show');
         }
 
     });
