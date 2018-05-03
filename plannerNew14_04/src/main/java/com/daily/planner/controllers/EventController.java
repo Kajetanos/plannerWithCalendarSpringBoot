@@ -74,4 +74,10 @@ public class EventController {
         return "mineCalendar";
     }
 
+    //dokonczyc robienie widoku dla poszczegolnego eventa :)
+    @RequestMapping(value ="event")
+    public String event() {
+
+        return "event";
+    }
 }
