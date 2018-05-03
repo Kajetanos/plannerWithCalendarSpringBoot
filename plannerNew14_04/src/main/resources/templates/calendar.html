@@ -450,7 +450,7 @@
             });
 
             function dayAddEvent(index, event) {
-                
+
                 if (!!event.allDay) {
                     monthAddEvent(index, event);
                     return;
@@ -462,7 +462,7 @@
                         text: event.title,
                         title: event.title,
                         'data-index': index
-                    }),
+                    }), 
                     start = event.start,
                     end = event.end || start,
                     time = event.start.toTimeString(),
