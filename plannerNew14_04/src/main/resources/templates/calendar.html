@@ -86,34 +86,33 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <p>Plese check room. In that time it gonna be busy</h2>
+                        <p>Plese check room. In that time it gonna be busy</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <div id='overlay'></div>
     <div class="modal fade" id="modalToDelete" role="dialog">
         <div class="modal-dialog">
-
+            <p>
+                jest val p1
+            </p>
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Modal Header</h4>
+                    <p>
+                        jest val p1
+                    </p>
                 </div>
-                <div class="modal-body">
-                    <tr th:each="events : ${events}">
-                        <td th:text="${events.description}"></td>
-                        <td th:text="${events.dateStart}"></td>
-                        <td th:text="${events.dateEnd}"></td>
-                        <td th:text="${events.timeStart}"></td>
-                        <td th:text="${events.timeEnd}"></td>
-                        <td th:text="${events.title}"></td>
-                        <td th:text="${events.place}"></td>
-                        <td><a th:id="${events.id}" id="idxe">Delete</a></td>
-                        <td><a th:id="${events.id}" id="idx">Edit</a></td>
-                    </tr>
+                <div id="del" class="modal-body">
+                <div id="p1" >
+                    <p>
+                    jest val p1
+                    </p>
+                </div>
                 </div>
             </div>
         </div>
@@ -427,14 +426,23 @@
                 return false;
             }).on('click', '.event', function () {
 
-                console.log($('div.event.begin').attr("data-index"));
+                // console.log($('div.event.begin').attr("data-index"));
 
-                $('#modalToDelete').modal('show');
+                var $newdiv1 = $( "<div id='object1'></div>" ),
+                    newdiv2 = document.createElement( "div" ),
+                    existingdiv1 = document.getElementById( "foo" );
+
+                // shit ! nic się nie dzieje console loga pokazuje przy wejsciu w modal Value sie nie zmienia. 
+                $('#modalToDelete').modal('show') ;
+                $('#modalToDelete').on('show.bs.modal' , function () {
+                    console.log('jest');
+                    $('p').val("YESTESMY TU");
+                }) ;
+
                 var $t = $(this),
                     index = +($t.attr('data-index')),
                     data = options.data[index];
-                console.log(data);
-
+                    console.log(data.id);
 
                 time = data.start.toTimeString();
                 if (time && data.end) {
@@ -459,10 +467,11 @@
                 //tutaj należy wstrzyknąć albo ajaxa z searchem albo idika wedlug eventu :)
                 var $event = $('<div/>', {
                         'class': 'event',
-                        text: event.title,
+                        text:  event.title,
                         title: event.title,
                         'data-index': index
-                    }), 
+
+                }),
                     start = event.start,
                     end = event.end || start,
                     time = event.start.toTimeString(),
@@ -648,8 +657,11 @@
                         start: startEvent,
                         end: endEvent,
                         // allDay: event.place,
-                        text: event.description
+                        text: event.description,
+                        id: event.id ,
+
                     });
+                    console.log(event);
                 });
             },
         });
