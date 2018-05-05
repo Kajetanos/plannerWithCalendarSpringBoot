@@ -6,6 +6,7 @@ import com.daily.planner.domain.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,11 +74,13 @@ public class EventController {
     public String calendarNew(){
         return "mineCalendar";
     }
-
     //dokonczyc robienie widoku dla poszczegolnego eventa :)
-    @RequestMapping(value ="event")
-    public String event() {
+//    @RequestMapping(value ="event")
+//    public String event() {
+//
+//        return "event";
+//    }
 
-        return "event";
-    }
+
+
 }

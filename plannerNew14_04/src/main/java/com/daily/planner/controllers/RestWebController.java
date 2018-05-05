@@ -5,6 +5,7 @@ import com.daily.planner.domain.SearchCriteria;
 import com.daily.planner.domain.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,6 +51,15 @@ public class RestWebController {
 //        List<Event> events = EventService.
 
 
+    }
+
+    @RequestMapping("/calendar/{id}")
+    public Event event(@PathVariable("id") String id , ModelMap model ) {
+
+        model.addAttribute("chosingEvent", eventRepository. findById(Integer.parseInt(id)));
+        Event event ;
+        event = eventRepository. findById(Integer.parseInt(id)) ;
+        return event;
     }
 
 

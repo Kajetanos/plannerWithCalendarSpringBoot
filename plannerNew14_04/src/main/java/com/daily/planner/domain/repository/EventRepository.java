@@ -56,8 +56,12 @@ public class EventRepository {
     public String getDate() {
         Event event = new Event();
         String dateDB = event.getTimeStart();
-
         return null;
+    }
+    @Transactional
+    public Event findById (int id) {
+        Event event = em.find(Event.class , id);
+        return event ;
     }
 
 }

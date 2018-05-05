@@ -93,26 +93,18 @@
         </div>
     </div>
     <div id='overlay'></div>
-    <div class="modal fade" id="modalToDelete" role="dialog">
+    <div class="modal fade" id="modalToDelete" role="dialog" th:fragment="modalContents">
         <div class="modal-dialog">
-            <p>
-                jest val p1
-            </p>
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                    <p>
-                        jest val p1
-                    </p>
+                    <h4 class="modal-title">Event</h4>
                 </div>
-                <div id="del" class="modal-body">
-                <div id="p1" >
-                    <p>
-                    jest val p1
-                    </p>
-                </div>
+                <div id="modalToDeleteDiv" class="modal-body">
+
+
+
                 </div>
             </div>
         </div>
@@ -290,6 +282,8 @@
 
 
 <script>
+
+
     var $currentPopover = null;
     $(document).on('shown.bs.popover', function (ev) {
         var $target = $(ev.target);
@@ -432,19 +426,65 @@
                     newdiv2 = document.createElement( "div" ),
                     existingdiv1 = document.getElementById( "foo" );
 
-                // shit ! nic się nie dzieje console loga pokazuje przy wejsciu w modal Value sie nie zmienia. 
-                $('#modalToDelete').modal('show') ;
-                $('#modalToDelete').on('show.bs.modal' , function () {
-                    console.log('jest');
-                    $('p').val("YESTESMY TU");
-                }) ;
+                // shit ! nic się nie dzieje console loga pokazuje przy wejsciu w modal Value sie nie zmienia.
 
                 var $t = $(this),
                     index = +($t.attr('data-index')),
                     data = options.data[index];
-                    console.log(data.id);
 
                 time = data.start.toTimeString();
+                console.log(data.id );
+                 $("#modalToDelete").modal("show");
+                $('#modalToDelete').on('show.bs.modal' , function () {
+                    var ids = data.id ;
+                    openPersonModal(ids);
+                    function openPersonModal(id ) {
+                        $.ajax({
+                            url: "api/event/calendar/" +id ,
+                            success: function (result) {
+                                    console.log(result.description);
+                                $("#modalToDeleteDiv").html("<table>\n" +
+                                    "  <tr>\n" +
+                                    "    <th>To do</th>\n" +
+                                    "    <td>"+result.description+"</td>\n" +
+                                "   \n" +
+                                "  </tr>\n" +
+                                "  <tr>\n" +
+                                "   <th>Date start:</th>\n" +
+                                "    <td>"+result.dateStart+"</td>\n" +
+                                "   \n" +
+                                "  </tr>\n" +
+                                "  <tr>\n" +
+                                "    <th>Date end:</th>\n" +
+                                "    <td>"+result.dateEnd+"</td>\n" +
+                                "    \n" +
+                                "  </tr>\n" +
+                                "  <tr>\n" +
+                                "    <th>Time start:</th>\n" +
+                                "    <td>"+result.timeStart+"</td>\n" +
+                                "    \n" +
+                                "  </tr>\n" +
+                                "  <tr>\n" +
+                                "    <th>Time end:</th>\n" +
+                                "    <td>"+result.timeEnd+"</td>\n" +
+                                "    \n" +
+                                "  </tr>\n" +
+                                "  <tr>\n" +
+                                "   <th>Title:</th>\n" +
+                                "    <td>"+result.title+"</td>\n" +
+                                "    \n" +
+                                "  </tr>\n" +
+                                "  <tr>\n" +
+                                "    <th>Room</th>\n" +
+                                "    <td>"+result.place+"</td>\n" +
+                                "    \n" +
+                                "  </tr>\n" +
+                                "</table>");
+
+                            }
+                        });
+                    }
+                }) ;
                 if (time && data.end) {
                     time = time + ' - ' + data.end.toTimeString();
                 }

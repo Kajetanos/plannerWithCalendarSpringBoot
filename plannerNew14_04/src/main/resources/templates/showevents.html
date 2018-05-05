@@ -44,6 +44,57 @@
 
         </tr>
 
+        <tr>
+            <th>To do:</th>
+        </tr>
+        <tr>
+            <th>Date start:</th>
+        </tr>
+        <tr>
+            <th>Date end:</th>
+        </tr>
+        <tr>
+            <th>Time start:</th>
+        </tr>
+        <tr>
+            <th>Time end:</th>
+        </tr>
+        <tr>
+            <th>Time title:</th>
+        </tr>
+        <tr>
+            <th>Time all day:</th>
+        </tr>
+
+        <tr th:each="events : ${events}">
+            <tr>
+            <td th:text="${events.description}"></td></tr>
+        <tr><td th:text="${events.dateStart}"></td></tr>
+        <tr><td th:text="${events.dateEnd}"></td></tr>
+        <tr><td th:text="${events.timeStart}"></td></tr>
+        <tr><td th:text="${events.timeEnd}"></td></tr>
+        <tr><td th:text="${events.title}"></td></tr>
+        <tr><td th:text="${events.place}"></td></tr>
+        </tr>
+
+
+
+        zmiana events na event
+        <tr th:each="events : ${events}">
+
+            <td th:text="${events.description}"></td>
+            <td th:text="${events.dateStart}"></td>
+            <td th:text="${events.dateEnd}"></td>
+            <td th:text="${events.timeStart}"></td>
+            <td th:text="${events.timeEnd}"></td>
+            <td th:text="${events.title}"></td>
+            <td th:text="${events.place}"></td>
+            <td><a th:id="${events.id}" id="idxe">Delete</a></td>
+
+
+
+        </tr>
+
         <script>
 
                 $( document ).ready(function() {
