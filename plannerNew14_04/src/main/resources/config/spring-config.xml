@@ -5,5 +5,5 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
     <context:component-scan base-package = "com.daily.planner"/>
 
-    <bean id="day" class="com.daily.planner.domain.Day" scope="singleton"/>
+    <bean id="day" class="com.daily.planner.domain.Event" scope="singleton"/>
 </beans>

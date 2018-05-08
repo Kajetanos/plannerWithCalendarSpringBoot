@@ -13,7 +13,8 @@
     <div id="holder" class="row"></div>
 
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add new task</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"><a>Add new task</a></button>
+    <button type="button" class="btn btn-info btn-lg" ><a href="/showevent">Show events</a></button>
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -65,8 +66,7 @@
                             </input>
                         </div>
                         <div class="row">
-                            <input id="submit" type="submit" class="btn btn-success btn-block"><span
-                                class="glyphicon glyphicon-off"></span> Save
+                            <input id="submit" type="submit" class="btn btn-success btn-block">
                             </input>
                         </div>
 
@@ -171,8 +171,7 @@
                   <button class="js-cal-option btn btn-default {{: mode==='year'? 'active':'' }}" data-mode="year" id="yearBtn">Year</button>
                   <button class="js-cal-option btn btn-default {{: mode==='month'? 'active':'' }}" data-mode="month" id="monthBtn">Month</button>
                   <button class="js-cal-option btn btn-default {{: mode==='week'? 'active':'' }}" data-mode="week">Week</button>
-                  <button class="js-cal-option btn btn-default {{: mode==='day'? 'active':'' }}" data-mode="day">Day</button>
-                </span>
+                  </span>
                         </td>
                     </tr>
                 </table>
@@ -381,7 +380,6 @@
                     var className = $(e.target).attr('class');
                     var regex = /(\d{4})-(\d{1,2})-(\d{1,2})/;
                     var classNameMatches = className.match(regex);
-                    // console.log(classNameMatches);
                     var dateToMakeChange = classNameMatches[1];
                     var day = classNameMatches[3];
                     var month = classNameMatches[2];
@@ -396,7 +394,6 @@
                     } else {
                         dateToMakeChange += "-0" + classNameMatches[3];
                     }
-                    console.log(dateToMakeChange)
                     $("#dateStart").val(dateToMakeChange);
 
                     return false;
@@ -420,20 +417,16 @@
                 return false;
             }).on('click', '.event', function () {
 
-                // console.log($('div.event.begin').attr("data-index"));
 
                 var $newdiv1 = $( "<div id='object1'></div>" ),
                     newdiv2 = document.createElement( "div" ),
                     existingdiv1 = document.getElementById( "foo" );
-
-                // shit ! nic się nie dzieje console loga pokazuje przy wejsciu w modal Value sie nie zmienia.
 
                 var $t = $(this),
                     index = +($t.attr('data-index')),
                     data = options.data[index];
 
                 time = data.start.toTimeString();
-                console.log(data.id );
                  $("#modalToDelete").modal("show");
                 $('#modalToDelete').on('show.bs.modal' , function () {
                     var ids = data.id ;
@@ -442,7 +435,6 @@
                         $.ajax({
                             url: "api/event/calendar/" +id ,
                             success: function (result) {
-                                    console.log(result.description);
                                 $("#modalToDeleteDiv").html("<table>\n" +
                                     "  <tr>\n" +
                                     "    <th>To do</th>\n" +
@@ -701,7 +693,6 @@
                         id: event.id ,
 
                     });
-                    console.log(event);
                 });
             },
         });
@@ -786,12 +777,6 @@
                     var timeEndDB = event.timeEnd;
                     var dateEndDB = event.dateEnd;
                     var place = event.place;
-                    console.log ( "data start + time start in ms " );
-                    console.log ( convertToMs(dataStart, timeStart).getTime()) ;
-                    console.log ( convertToMs(dataStart, timeStart).getTime() + 7200000 ) ;
-                    console.log ( "data startDB + time startDB in ms " );
-                    console.log(convertToMs(dateStartDB, timeStartDB).getTime()) ;
-
                     if ( convertToMs(dataStart, timeStart).getTime()  >= convertToMs(dateStartDB, timeStartDB).getTime() && convertToMs(dataEnd, timeEnd).getTime() < convertToMs(dateEndDB, timeEndDB).getTime() ) {
 
                         if ($('input:radio:checked').val() == place  ) {
@@ -813,20 +798,6 @@
         }
 
     });
-    // $('#modalToDelete').modal('show' , function () {
-    //
-    // $(function (id) {
-    //     $.ajax({
-    //         url: "api/event/delete/" + id,
-    //         type: "DELETE",
-    //         // data: {id:id} ,
-    //         success: function (response) {
-    //             // alert(response.message);
-    //             // load();
-    //         },
-    //     });
-    // });
-    // });
     $("form").trigger("reset");
 </script>
 <link href="css/custom.css"

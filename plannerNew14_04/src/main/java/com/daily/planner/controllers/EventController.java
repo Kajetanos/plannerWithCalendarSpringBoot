@@ -1,22 +1,15 @@
 package com.daily.planner.controllers;
 
-import com.daily.planner.domain.Day;
 import com.daily.planner.domain.Event;
 import com.daily.planner.domain.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-
-import static com.daily.planner.domain.repository.EventRepository.parseTime;
 
 @Controller
 public class EventController {
@@ -26,22 +19,8 @@ public class EventController {
     Event event;
 
     @Autowired
-    Day day;
-
-    @Autowired
     EventRepository eventRepository;
 
-
-
-    @RequestMapping("/eventform")
-    public String event(Model model){
-//        Event event = eventRepository.getEvent();
-        Event event = new Event();
-        model.addAttribute("event" , event);
-        System.out.println("mehod ready");
-
-        return "eventform";
-    }
     @RequestMapping("showevent")
     public String showEvent(Model model , Event event){
 
@@ -69,18 +48,5 @@ public class EventController {
 
         return "redirect:/calendar";
     }
-
-    @RequestMapping(value ="calendarNew")
-    public String calendarNew(){
-        return "mineCalendar";
-    }
-    //dokonczyc robienie widoku dla poszczegolnego eventa :)
-//    @RequestMapping(value ="event")
-//    public String event() {
-//
-//        return "event";
-//    }
-
-
 
 }

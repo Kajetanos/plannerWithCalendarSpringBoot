@@ -1,15 +1,11 @@
 package com.daily.planner.controllers;
 
 import com.daily.planner.domain.Event;
-import com.daily.planner.domain.SearchCriteria;
 import com.daily.planner.domain.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,25 +30,6 @@ public class RestWebController {
         eventRepository.removeEvent(Integer.parseInt(id));
         System.out.println("usunięty id = "+id);
     }
-
-    @PostMapping("/checkRoom")
-    public void getSearchResultViaAjax(
-            @Valid @RequestBody SearchCriteria search, Errors errors) {
-
-
-//
-//        if (errors.hasErrors()) {
-//
-//            result.setMsg(errors.getAllErrors()
-//                    .stream().map(x -> x.getDefaultMessage())
-//                    .collect(Collectors.joining(",")));
-//
-//        }
-//        List<Event> events = EventService.
-
-
-    }
-
     @RequestMapping("/calendar/{id}")
     public Event event(@PathVariable("id") String id , ModelMap model ) {
 

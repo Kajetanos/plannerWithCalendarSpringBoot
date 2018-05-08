@@ -19,13 +19,4 @@ public class EventService {
     EventRepository eventRepository;
 
 
-//    public Event findByDate(String date) {
-//
-//        String eventStartDateFromDB = eventRepository.getDate();
-//
-//    }
-
-
-
-
 }
